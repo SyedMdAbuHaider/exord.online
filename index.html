@@ -16,7 +16,6 @@
             --bg: #faf9f6;
             --card-bg: #ffffff;
             --dark: #1a1a1a;
-            --font: 'Neucha', cursive, sans-serif;
             --shadow: 4px 4px 0 rgba(0,0,0,0.08);
         }
         .dark-mode {
@@ -135,6 +134,7 @@
             overflow: hidden;
             transition: 0.2s;
             box-shadow: 5px 5px 0 rgba(0,0,0,0.08);
+            position: relative;
         }
         .card:hover { transform: translateY(-4px) rotate(0.5deg); box-shadow: 8px 8px 0 rgba(0,0,0,0.12); }
         .card-img { height: 180px; background: #e5e7eb; border-bottom: 2.5px solid #1a1a1a; }
@@ -169,6 +169,50 @@
             transition: 0.2s;
         }
         .visit-btn:hover { background: #b80510; box-shadow: 4px 4px 0 rgba(0,0,0,0.2); transform: translate(-2px,-2px); }
+
+        /* Contact section sketchy */
+        .contact-section {
+            max-width: 1300px;
+            margin: 3rem auto 2rem auto;
+            padding: 0 2rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .contact-card {
+            background: var(--card-bg);
+            border: 2.5px solid #1a1a1a;
+            border-radius: 35px 12px 35px 12px/12px 35px 12px 35px;
+            padding: 1.6rem;
+            box-shadow: var(--shadow);
+            transition: 0.2s;
+        }
+        .contact-card:hover { transform: translateY(-3px); box-shadow: 6px 6px 0 rgba(0,0,0,0.1); }
+        .contact-card h3 {
+            font-size: 1.6rem;
+            border-left: 8px solid #E30613;
+            padding-left: 0.7rem;
+            margin-bottom: 1rem;
+        }
+        .contact-detail { margin: 1rem 0; display: flex; align-items: flex-start; gap: 0.7rem; flex-wrap: wrap; }
+        .contact-detail strong { min-width: 70px; color: #E30613; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+        .social-link {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid #1a1a1a;
+            border-radius: 30px 8px 30px 8px;
+            padding: 0.4rem 1.2rem;
+            text-decoration: none;
+            font-weight: bold;
+            color: #1a1a1a;
+            transition: 0.2s;
+        }
+        .social-link:hover { background: #E30613; color: white; border-color: #E30613; }
+        .contact-icon { font-size: 1.3rem; }
 
         /* Admin panel (kept clean for usability) */
         .admin-layout { display: none; min-height: 100vh; background: #f1f3f5; }
@@ -233,13 +277,53 @@
         <div class="services-grid" id="featured-grid"></div>
         <h2 style="text-align:center;font-size:2.2rem;">📦 All Services</h2>
         <div class="services-grid" id="all-grid"></div>
+
+        <!-- NEW: Get in Touch / Contact Section -->
+        <div class="contact-section">
+            <h2 style="font-size:2rem; text-align:center; margin-bottom:1rem;">📞 Get in touch</h2>
+            <p style="text-align:center; font-size:1.2rem; margin-bottom:0.5rem;">We’d love to hear from you. Drop us a line or visit us at our office.</p>
+            <div class="contact-grid">
+                <!-- Banasree Office -->
+                <div class="contact-card sketch">
+                    <h3>🏠 Banasree Local Office</h3>
+                    <div class="contact-detail"><strong>📍 Address:</strong> House # 18, Road # 05, Block #C, Banasree, Rampura, Dhaka 1219. (Ground Floor)</div>
+                    <div class="contact-detail"><strong>📧 Email:</strong> info@exordonline.com, support@exordonline.com</div>
+                    <div class="contact-detail"><strong>📞 Call Us:</strong> 09614-444444, 09614-989898, 09639-130130</div>
+                </div>
+                <!-- Aftabnagar Office -->
+                <div class="contact-card sketch">
+                    <h3>🏢 Aftabnagar Local Office</h3>
+                    <div class="contact-detail"><strong>📍 Address:</strong> House # 28, Road # Main, Block # F, Sector # 02, Aftabnagar, Badda, Dhaka-1212</div>
+                    <div class="contact-detail"><strong>📧 Email:</strong> info@exordonline.com, support@exordonline.com</div>
+                    <div class="contact-detail"><strong>📞 Call Us:</strong> 09614-444444, 09614-989898, 09639-130130</div>
+                </div>
+                <!-- Social & Web Links -->
+                <div class="contact-card sketch">
+                    <h3>🌐 Connect with Exord</h3>
+                    <div class="social-links">
+                        <a href="https://exord.bd/" target="_blank" class="social-link">🌍 Website</a>
+                        <a href="https://www.facebook.com/exord.isp" target="_blank" class="social-link">📘 Facebook</a>
+                        <a href="https://www.instagram.com/exordonline/" target="_blank" class="social-link">📸 Instagram</a>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <p><strong>✉️ Official Email:</strong> info@exordonline.com</p>
+                        <p><strong>⏰ Support:</strong> 10 AM - 8 PM (Sat-Thu)</p>
+                        <p><strong>🌐 Main site:</strong> <a href="https://exord.bd/" target="_blank" style="color:#E30613;">https://exord.bd/</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <footer style="background:#1a1a1a;color:#ccc;text-align:center;padding:2rem;margin-top:3rem;border-top:5px solid #E30613;">
+    <footer style="background:#1a1a1a;color:#ccc;text-align:center;padding:2rem;margin-top:2rem;border-top:5px solid #E30613;">
         <p style="font-weight:700;">EXORD ONLINE</p>
         <p>Value Added Services Portal</p>
-        <p>© <span id="year"></span> Exord Online</p>
-        <p><a href="#" style="color:#fff;">Facebook</a> · <a href="#" style="color:#fff;">Instagram</a> · <a href="#" style="color:#fff;">Website</a></p>
+        <p>© <span id="year"></span> Exord Online | All rights reserved</p>
+        <p style="margin-top:0.5rem;">
+            <a href="https://exord.bd/" target="_blank" style="color:#fff; text-decoration:underline;">Website</a> · 
+            <a href="https://www.facebook.com/exord.isp" target="_blank" style="color:#fff; text-decoration:underline;">Facebook</a> · 
+            <a href="https://www.instagram.com/exordonline/" target="_blank" style="color:#fff; text-decoration:underline;">Instagram</a>
+        </p>
     </footer>
 
     <button id="dark-toggle" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:#1a1a1a;color:#fff;border:none;font-size:1.3rem;cursor:pointer;z-index:999;" onclick="toggleDark()">🌙</button>
@@ -498,15 +582,16 @@
                 return `<tr>
                     <td><img src="${s.preview_image || 'data:image/svg+xml,...'}" width="60" height="36" style="object-fit:cover;border-radius:4px;"></td>
                     <td>${s.name}</td>
-                    <td>${cat?cat.name:'—'}</td>
-                    <td>${s.status}</td>
-                    <td>${s.featured == 1 ? '⭐' : ''}</td>
-                    <td>${s.click_count||0}</td>
+                    <td>${cat?cat.name:'—'}软</td>
+                    <td>${s.status}软</td>
+                    <td>${s.featured == 1 ? '⭐' : ''}软</td>
+                    <td>${s.click_count||0}软</td>
                     <td>
                         <button class="btn btn-sm" style="background:#fef3c7;" onclick="editService(${s.id})">✏️</button>
                         <button class="btn btn-sm" style="background:#dbeafe;" onclick="toggleStatus(${s.id})">🔄</button>
                         <button class="btn btn-sm" style="background:#fee2e2;" onclick="deleteService(${s.id})">🗑</button>
-                    </td></tr>`;
+                    </td>
+                </tr>`;
             }).join('');
         }
 
