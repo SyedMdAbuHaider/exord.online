@@ -59,29 +59,6 @@
             transform: translate(-2px,-2px);
         }
 
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #E30613, #8b0000);
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-content {
-            background: rgba(255,255,255,0.92);
-            border: 3px solid #1a1a1a;
-            border-radius: 60px 20px 60px 20px/20px 60px 20px 60px;
-            padding: 3rem 2rem;
-            max-width: 700px;
-            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
-        }
-        .hero h1 { font-size: 3.5rem; color: #1a1a1a; text-shadow: 2px 2px 0 rgba(227,6,19,0.2); }
-        .hero p { font-size: 1.5rem; margin-bottom: 2rem; color: #2d2d2d; }
-
         /* Stats, notice, filters */
         .stats { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 2rem; }
         .stat-box {
@@ -243,27 +220,7 @@
 
     <!-- FRONTEND -->
     <div id="frontend">
-        <section class="hero">
-            <div class="hero-content sketch">
-                <h1>EXORD ONLINE</h1>
-                <p>Value Added Services Portal</p>
-                <p style="font-size:1.2rem;">Access all our digital services from one place.</p>
-                <button class="sketch-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
-            </div>
-        </section>
-
-        <div class="stats" id="stats">
-            <div class="stat-box sketch"><div class="stat-number" id="stat-total">0</div><div>Total Services</div></div>
-            <div class="stat-box sketch"><div class="stat-number" id="stat-active">0</div><div>Active</div></div>
-            <div class="stat-box sketch"><div class="stat-number" id="stat-cats">0</div><div>Categories</div></div>
-            <div class="stat-box sketch"><div class="stat-number" id="stat-visits">0</div><div>Visits</div></div>
-        </div>
-
-        <div class="filter-bar">
-            <input type="text" id="search" placeholder="🔍 Search services..." oninput="renderServices()">
-            <select id="cat-filter" onchange="renderServices()"><option value="all">All Categories</option></select>
-            <select id="status-filter" onchange="renderServices()"><option value="all">All Status</option><option value="online">Online</option><option value="maintenance">Maintenance</option><option value="offline">Offline</option></select>
-        </div>
+        <!-- Hero, stats, and filter bar are intentionally removed as requested -->
 
         <div class="notice sketch">
             <span style="font-size:2rem;color:#E30613;">⚠️</span>
@@ -461,9 +418,14 @@
 
         // ==================== RENDERING ====================
         function renderServices() {
-            const search = (document.getElementById('search')?.value || '').toLowerCase();
-            const cat = document.getElementById('cat-filter')?.value || 'all';
-            const status = document.getElementById('status-filter')?.value || 'all';
+            // If the filter bar elements don't exist, just show all services (no filtering)
+            const searchEl = document.getElementById('search');
+            const catEl = document.getElementById('cat-filter');
+            const statusEl = document.getElementById('status-filter');
+            const search = searchEl ? searchEl.value.toLowerCase() : '';
+            const cat = catEl ? catEl.value : 'all';
+            const status = statusEl ? statusEl.value : 'all';
+
             let filtered = [...services];
             if (search) filtered = filtered.filter(s => s.name.toLowerCase().includes(search) || s.description.toLowerCase().includes(search));
             if (cat !== 'all') filtered = filtered.filter(s => s.category_id == cat);
@@ -471,10 +433,13 @@
 
             const featured = filtered.filter(s => s.featured == 1).sort((a,b) => a.sort_order - b.sort_order);
             const regular = filtered.filter(s => s.featured != 1).sort((a,b) => a.sort_order - b.sort_order);
-            document.getElementById('featured-grid').innerHTML = featured.map(cardHTML).join('');
-            document.getElementById('all-grid').innerHTML = regular.map(cardHTML).join('');
-            if (featured.length === 0) document.getElementById('services').style.display = 'none';
-            else document.getElementById('services').style.display = '';
+            const featuredGrid = document.getElementById('featured-grid');
+            const allGrid = document.getElementById('all-grid');
+            if (featuredGrid) featuredGrid.innerHTML = featured.map(cardHTML).join('');
+            if (allGrid) allGrid.innerHTML = regular.map(cardHTML).join('');
+            // Adjust visibility of the "Featured Services" heading
+            const servicesHeading = document.getElementById('services');
+            if (servicesHeading) servicesHeading.style.display = featured.length === 0 ? 'none' : '';
         }
 
         function cardHTML(s) {
@@ -509,10 +474,15 @@
         }
 
         function updateStats() {
-            document.getElementById('stat-total').textContent = services.length;
-            document.getElementById('stat-active').textContent = services.filter(s => s.status === 'online').length;
-            document.getElementById('stat-cats').textContent = categories.length;
-            document.getElementById('stat-visits').textContent = getVisits().length;
+            // Safely update stats only if elements exist
+            const elTotal = document.getElementById('stat-total');
+            const elActive = document.getElementById('stat-active');
+            const elCats = document.getElementById('stat-cats');
+            const elVisits = document.getElementById('stat-visits');
+            if (elTotal) elTotal.textContent = services.length;
+            if (elActive) elActive.textContent = services.filter(s => s.status === 'online').length;
+            if (elCats) elCats.textContent = categories.length;
+            if (elVisits) elVisits.textContent = getVisits().length;
         }
 
         function populateFilters() {
@@ -582,10 +552,10 @@
                 return `<tr>
                     <td><img src="${s.preview_image || 'data:image/svg+xml,...'}" width="60" height="36" style="object-fit:cover;border-radius:4px;"></td>
                     <td>${s.name}</td>
-                    <td>${cat?cat.name:'—'}软</td>
-                    <td>${s.status}软</td>
-                    <td>${s.featured == 1 ? '⭐' : ''}软</td>
-                    <td>${s.click_count||0}软</td>
+                    <td>${cat?cat.name:'—'}</td>
+                    <td>${s.status}</td>
+                    <td>${s.featured == 1 ? '⭐' : ''}</td>
+                    <td>${s.click_count||0}</td>
                     <td>
                         <button class="btn btn-sm" style="background:#fef3c7;" onclick="editService(${s.id})">✏️</button>
                         <button class="btn btn-sm" style="background:#dbeafe;" onclick="toggleStatus(${s.id})">🔄</button>
