@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exord Online – Value Added Services Portal</title>
+    <meta name="description" content="Access all Exord Online digital services from one place.">
+    <meta name="theme-color" content="#E30613">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
+    <style>
+        /* ===== SKETCHY GLOBAL STYLES ===== */
+        :root {
+            --primary: #E30613;
+            --bg: #faf9f6;
+            --card-bg: #ffffff;
+            --dark: #1a1a1a;
+            --font: 'Neucha', cursive, sans-serif;
+            --shadow: 4px 4px 0 rgba(0,0,0,0.08);
+        }
+        .dark-mode {
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --dark: #f0f0f0;
+            --shadow: 4px 4px 0 rgba(255,255,255,0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+        /* Sketch border filter */
+        .sketch {
+            filter: url(#sketch-filter);
+        }
+        .sketch-btn {
+            display: inline-block;
+            background: #fff;
+            color: #E30613;
+            padding: 0.7rem 2rem;
+            border: 2.5px solid #E30613;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: var(--font);
+            box-shadow: 3px 3px 0 rgba(227,6,19,0.2);
+            transition: all 0.2s;
+        }
+        .sketch-btn:hover {
+            background: #E30613;
+            color: #fff;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.15);
+            transform: translate(-2px,-2px);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #E30613, #8b0000);
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            background: rgba(255,255,255,0.92);
+            border: 3px solid #1a1a1a;
+            border-radius: 60px 20px 60px 20px/20px 60px 20px 60px;
+            padding: 3rem 2rem;
+            max-width: 700px;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+        }
+        .hero h1 { font-size: 3.5rem; color: #1a1a1a; text-shadow: 2px 2px 0 rgba(227,6,19,0.2); }
+        .hero p { font-size: 1.5rem; margin-bottom: 2rem; color: #2d2d2d; }
+
+        /* Stats, notice, filters */
+        .stats { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 2rem; }
+        .stat-box {
+            background: var(--card-bg);
+            border: 2.5px solid #1a1a1a;
+            border-radius: 20px 6px 20px 6px/6px 20px 6px 20px;
+            padding: 1.2rem 2rem;
+            text-align: center;
+            min-width: 140px;
+            box-shadow: var(--shadow);
+        }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: #E30613; }
+        .notice {
+            background: #fff5f5;
+            border: 3px solid #E30613;
+            border-radius: 25px 8px 25px 8px/8px 25px 8px 25px;
+            padding: 1.5rem 2rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 5px 5px 0 rgba(227,6,19,0.2);
+        }
+        .filter-bar {
+            display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center;
+            padding: 1rem 2rem; max-width: 1000px; margin: 0 auto;
+        }
+        .filter-bar input, .filter-bar select {
+            padding: 0.7rem 1.2rem;
+            border: 2px solid #1a1a1a;
+            border-radius: 20px 5px 20px 5px;
+            font-family: var(--font);
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        /* Service cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 2.5px solid #1a1a1a;
+            border-radius: 30px 10px 30px 10px/10px 30px 10px 30px;
+            overflow: hidden;
+            transition: 0.2s;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.08);
+        }
+        .card:hover { transform: translateY(-4px) rotate(0.5deg); box-shadow: 8px 8px 0 rgba(0,0,0,0.12); }
+        .card-img { height: 180px; background: #e5e7eb; border-bottom: 2.5px solid #1a1a1a; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .card-body { padding: 1.5rem; position: relative; }
+        .card-logo {
+            width: 48px; height: 48px;
+            border: 2px solid #1a1a1a;
+            border-radius: 14px 4px 14px 4px;
+            position: absolute; top: -28px; left: 1.5rem;
+            background: #fff;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px 5px 20px 5px;
+            border: 1.5px solid #1a1a1a;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+        .visit-btn {
+            display: block;
+            background: #E30613;
+            color: #fff;
+            padding: 0.6rem;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border: 2.5px solid #1a1a1a;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 1rem;
+            transition: 0.2s;
+        }
+        .visit-btn:hover { background: #b80510; box-shadow: 4px 4px 0 rgba(0,0,0,0.2); transform: translate(-2px,-2px); }
+
+        /* Admin panel (kept clean for usability) */
+        .admin-layout { display: none; min-height: 100vh; background: #f1f3f5; }
+        .admin-layout.active { display: flex; }
+        .admin-sidebar { width: 240px; background: #1a1a1a; color: #fff; padding: 1.5rem; font-family: 'Segoe UI', sans-serif; }
+        .admin-sidebar nav a { display: block; color: #ccc; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; margin-bottom: 0.2rem; }
+        .admin-sidebar nav a:hover, .admin-sidebar nav a.active { background: #E30613; color: #fff; }
+        .admin-main { flex: 1; padding: 2rem; overflow-y: auto; font-family: 'Segoe UI', sans-serif; }
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; }
+        .admin-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+        .btn { padding: 0.5rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: #E30613; color: #fff; }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <!-- SVG filter for sketchy borders -->
+    <svg style="position:absolute;width:0;height:0;">
+        <filter id="sketch-filter" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <!-- FRONTEND -->
+    <div id="frontend">
+        <section class="hero">
+            <div class="hero-content sketch">
+                <h1>EXORD ONLINE</h1>
+                <p>Value Added Services Portal</p>
+                <p style="font-size:1.2rem;">Access all our digital services from one place.</p>
+                <button class="sketch-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+            </div>
+        </section>
+
+        <div class="stats" id="stats">
+            <div class="stat-box sketch"><div class="stat-number" id="stat-total">0</div><div>Total Services</div></div>
+            <div class="stat-box sketch"><div class="stat-number" id="stat-active">0</div><div>Active</div></div>
+            <div class="stat-box sketch"><div class="stat-number" id="stat-cats">0</div><div>Categories</div></div>
+            <div class="stat-box sketch"><div class="stat-number" id="stat-visits">0</div><div>Visits</div></div>
+        </div>
+
+        <div class="filter-bar">
+            <input type="text" id="search" placeholder="🔍 Search services..." oninput="renderServices()">
+            <select id="cat-filter" onchange="renderServices()"><option value="all">All Categories</option></select>
+            <select id="status-filter" onchange="renderServices()"><option value="all">All Status</option><option value="online">Online</option><option value="maintenance">Maintenance</option><option value="offline">Offline</option></select>
+        </div>
+
+        <div class="notice sketch">
+            <span style="font-size:2rem;color:#E30613;">⚠️</span>
+            <div>
+                <strong style="color:#E30613;">গুরুত্বপূর্ণ বিজ্ঞপ্তি</strong>
+                <p style="font-size:0.95rem;color:#2d2d2d;">বি.দ্র. নিন্মে প্রদত্ত সকল সাইট থার্ড পার্টি থেকে নেয়া হয়েছে। সাইট গুলো সবসময় কাজ করবে এবং সব সাইট থেকে সবসময় ভালো স্পিড পাওয়া যাবে, এমন কোন নিশ্চয়তা দেয়া সম্ভব নয়। যেহেতু ভ্যালু এডেড সার্ভিসগুলো গ্রাহকদের ইন্টারনেট সংযোগের সাথে বিনামূল্যে বিতরণ করা হয়, তাই ভ্যালু এডেড সার্ভিস সংক্রান্ত কোন অভিযোগ আমরা গ্রহন করি না।</p>
+            </div>
+        </div>
+
+        <h2 style="text-align:center;margin-top:2rem;font-size:2.2rem;" id="services">⭐ Featured Services</h2>
+        <div class="services-grid" id="featured-grid"></div>
+        <h2 style="text-align:center;font-size:2.2rem;">📦 All Services</h2>
+        <div class="services-grid" id="all-grid"></div>
+    </div>
+
+    <footer style="background:#1a1a1a;color:#ccc;text-align:center;padding:2rem;margin-top:3rem;border-top:5px solid #E30613;">
+        <p style="font-weight:700;">EXORD ONLINE</p>
+        <p>Value Added Services Portal</p>
+        <p>© <span id="year"></span> Exord Online</p>
+        <p><a href="#" style="color:#fff;">Facebook</a> · <a href="#" style="color:#fff;">Instagram</a> · <a href="#" style="color:#fff;">Website</a></p>
+    </footer>
+
+    <button id="dark-toggle" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:#1a1a1a;color:#fff;border:none;font-size:1.3rem;cursor:pointer;z-index:999;" onclick="toggleDark()">🌙</button>
+
+    <!-- ADMIN PANEL (hidden by default) -->
+    <div class="admin-layout" id="admin-layout">
+        <div class="admin-sidebar">
+            <h3 style="color:#E30613;">🔧 Admin Panel</h3>
+            <nav>
+                <a class="active" data-panel="dashboard" onclick="switchPanel('dashboard',this)">📊 Dashboard</a>
+                <a data-panel="services" onclick="switchPanel('services',this)">📦 Services</a>
+                <a data-panel="add" onclick="switchPanel('add',this)">➕ Add Service</a>
+                <a data-panel="categories" onclick="switchPanel('categories',this)">📁 Categories</a>
+                <a data-panel="visits" onclick="switchPanel('visits',this)">📈 Visits</a>
+                <a data-panel="export" onclick="switchPanel('export',this)">📥 Export</a>
+                <a onclick="logout()" style="color:#fca5a5;">🚪 Logout</a>
+                <a onclick="showFrontend()" style="color:#93c5fd;">👁 View Site</a>
+            </nav>
+        </div>
+        <div class="admin-main">
+            <div class="admin-panel active" id="dashboard-panel">
+                <h2>Dashboard</h2>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <div class="admin-card" style="flex:1;text-align:center;"><strong>Services</strong><br><span style="font-size:2rem;color:#E30613;" id="dash-total">0</span></div>
+                    <div class="admin-card" style="flex:1;text-align:center;"><strong>Active</strong><br><span style="font-size:2rem;color:#10b981;" id="dash-active">0</span></div>
+                    <div class="admin-card" style="flex:1;text-align:center;"><strong>Clicks</strong><br><span style="font-size:2rem;color:#3b82f6;" id="dash-clicks">0</span></div>
+                </div>
+            </div>
+            <div class="admin-panel" id="services-panel">
+                <h2>Manage Services</h2>
+                <button class="btn btn-primary" onclick="switchPanel('add',document.querySelector('[data-panel=add]'))">➕ Add New</button>
+                <div class="admin-card" style="overflow-x:auto;">
+                    <table class="admin-table" id="admin-services-table"><thead><tr><th>Preview</th><th>Name</th><th>Category</th><th>Status</th><th>Featured</th><th>Clicks</th><th>Actions</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+            <div class="admin-panel" id="add-panel">
+                <h2 id="form-title">Add Service</h2>
+                <div class="admin-card">
+                    <form id="service-form">
+                        <input type="hidden" id="edit-id">
+                        <div style="margin-bottom:0.8rem;"><label>Name *</label><input type="text" id="sname" required style="width:100%;padding:0.5rem;"></div>
+                        <div style="margin-bottom:0.8rem;"><label>Description</label><input type="text" id="sdesc" style="width:100%;padding:0.5rem;"></div>
+                        <div style="margin-bottom:0.8rem;"><label>URL *</label><input type="url" id="surl" required style="width:100%;padding:0.5rem;"></div>
+                        <div style="margin-bottom:0.8rem;"><label>Category</label><select id="scat" style="width:100%;padding:0.5rem;"></select></div>
+                        <div style="margin-bottom:0.8rem;"><label>Status</label><select id="sstatus"><option>online</option><option>maintenance</option><option>offline</option></select></div>
+                        <div style="margin-bottom:0.8rem;"><label>Featured</label><select id="sfeat"><option value="0">No</option><option value="1">Yes</option></select></div>
+                        <div style="margin-bottom:0.8rem;"><label>Preview Image URL</label><input type="text" id="spreview" style="width:100%;padding:0.5rem;" placeholder="https://..."></div>
+                        <div style="margin-bottom:0.8rem;"><label>Logo URL</label><input type="text" id="slogo" style="width:100%;padding:0.5rem;" placeholder="https://..."></div>
+                        <button type="submit" class="btn btn-primary">💾 Save</button>
+                        <button type="button" class="btn" onclick="switchPanel('services',document.querySelector('[data-panel=services]'))">Cancel</button>
+                    </form>
+                </div>
+            </div>
+            <div class="admin-panel" id="categories-panel">
+                <h2>Categories</h2>
+                <div class="admin-card">
+                    <form id="cat-form" style="display:flex;gap:0.5rem;">
+                        <input type="text" id="new-cat" placeholder="Category name" required style="flex:1;padding:0.5rem;">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+                <div class="admin-card"><table class="admin-table" id="cat-table"><thead><tr><th>Name</th><th>Actions</th></tr></thead><tbody></tbody></table></div>
+            </div>
+            <div class="admin-panel" id="visits-panel">
+                <h2>Visit Logs</h2>
+                <button class="btn btn-primary" onclick="clearVisits()">Clear Logs</button>
+                <div class="admin-card" style="max-height:400px;overflow-y:auto;">
+                    <table class="admin-table" id="visits-table"><thead><tr><th>Service</th><th>Time</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+            <div class="admin-panel" id="export-panel">
+                <h2>Export / Import</h2>
+                <div class="admin-card">
+                    <h3>Export services.json</h3>
+                    <p>Download the current service list as a file you can upload to GitHub.</p>
+                    <button class="btn btn-primary" onclick="exportJSON()">📤 Download services.json</button>
+                </div>
+                <div class="admin-card">
+                    <h3>Import services.json</h3>
+                    <input type="file" id="import-file" accept=".json"><br>
+                    <button class="btn btn-primary" onclick="importJSON()">📥 Replace services</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login modal -->
+    <div id="login-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:2rem;border-radius:16px;max-width:350px;width:90%;text-align:center;">
+            <h2>🔐 Admin Login</h2>
+            <form id="login-form">
+                <input type="text" id="luser" placeholder="Username" required style="width:100%;padding:0.6rem;margin:0.5rem 0;"><br>
+                <input type="password" id="lpass" placeholder="Password" required style="width:100%;padding:0.6rem;margin:0.5rem 0;"><br>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
+            </form>
+            <p style="font-size:0.75rem;color:#6b7280;margin-top:0.5rem;">Default: admin / admin123</p>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let services = [];          // loaded from services.json
+        const DB_KEY = 'exord_data';
+        const VISITS_KEY = 'exord_visits';
+        const SESSION_KEY = 'exord_session';
+        let categories = JSON.parse(localStorage.getItem(DB_KEY+'_cats') || 'null') || [
+            { id: 1, name: 'Entertainment' }, { id: 2, name: 'Streaming' }, { id: 3, name: 'Downloads' },
+            { id: 4, name: 'Gaming' }, { id: 5, name: 'Education' }, { id: 6, name: 'Utility' }
+        ];
+        let users = [{ id: 1, username: 'admin', password_hash: btoa('admin123') }];
+
+        // ==================== DATA LOADING ====================
+        async function loadServices() {
+            try {
+                const resp = await fetch('services.json');
+                if (!resp.ok) throw new Error('Not found');
+                services = await resp.json();
+            } catch (e) {
+                console.warn('services.json not found, using fallback.');
+                services = [
+                    { id: 1, name: 'TV Server', description: 'Watch live TV.', url: '#', preview_image: '', logo: '', category_id: 1, status: 'online', featured: 1, sort_order: 1, click_count: 0 },
+                    { id: 2, name: 'FTP Server', description: 'Fast file transfer.', url: '#', preview_image: '', logo: '', category_id: 6, status: 'online', featured: 1, sort_order: 2, click_count: 0 }
+                ];
+            }
+            renderAll();
+            updateStats();
+            if (getSession()) showAdmin();
+            else checkHash();
+        }
+
+        function getVisits() { return JSON.parse(localStorage.getItem(VISITS_KEY) || '[]'); }
+        function saveVisits(v) { localStorage.setItem(VISITS_KEY, JSON.stringify(v)); }
+        function getSession() { return sessionStorage.getItem(SESSION_KEY) === 'true'; }
+        function setSession(val) { sessionStorage.setItem(SESSION_KEY, val ? 'true' : 'false'); }
+
+        // ==================== RENDERING ====================
+        function renderServices() {
+            const search = (document.getElementById('search')?.value || '').toLowerCase();
+            const cat = document.getElementById('cat-filter')?.value || 'all';
+            const status = document.getElementById('status-filter')?.value || 'all';
+            let filtered = [...services];
+            if (search) filtered = filtered.filter(s => s.name.toLowerCase().includes(search) || s.description.toLowerCase().includes(search));
+            if (cat !== 'all') filtered = filtered.filter(s => s.category_id == cat);
+            if (status !== 'all') filtered = filtered.filter(s => s.status === status);
+
+            const featured = filtered.filter(s => s.featured == 1).sort((a,b) => a.sort_order - b.sort_order);
+            const regular = filtered.filter(s => s.featured != 1).sort((a,b) => a.sort_order - b.sort_order);
+            document.getElementById('featured-grid').innerHTML = featured.map(cardHTML).join('');
+            document.getElementById('all-grid').innerHTML = regular.map(cardHTML).join('');
+            if (featured.length === 0) document.getElementById('services').style.display = 'none';
+            else document.getElementById('services').style.display = '';
+        }
+
+        function cardHTML(s) {
+            const cat = categories.find(c => c.id == s.category_id);
+            const preview = s.preview_image || `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180"><rect fill="%23E30613" width="300" height="180"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="20" font-family="sans-serif">${s.name}</text></svg>`)}`;
+            const logo = s.logo || `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><rect fill="%23E30613" width="44" height="44" rx="8"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="18">${s.name.charAt(0)}</text></svg>`)}`;
+            const isOff = s.status === 'offline';
+            return `
+            <div class="card sketch">
+                ${s.featured == 1 ? '<div style="position:absolute;top:10px;right:-30px;background:#FFD700;color:#1a1a1a;padding:2px 35px;transform:rotate(45deg);font-weight:700;border:2px solid #1a1a1a;z-index:2;">⭐</div>' : ''}
+                <div class="card-img"><img src="${preview}" alt="${s.name}" loading="lazy"></div>
+                <div class="card-body">
+                    <img src="${logo}" class="card-logo" alt="logo">
+                    <h3 style="margin-top:0.8rem;">${s.name}</h3>
+                    <p style="color:#4a4a4a;">${s.description || ''}</p>
+                    <span class="status-badge" style="background:${s.status==='online'?'#d1fae5':s.status==='maintenance'?'#fef3c7':'#fee2e2'}">
+                        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${s.status==='online'?'#10b981':s.status==='maintenance'?'#f59e0b':'#ef4444'};margin-right:6px;"></span>
+                        ${s.status}
+                    </span>
+                    <a href="${s.url}" target="_blank" class="visit-btn" ${isOff?'style="pointer-events:none;opacity:0.6;"':''} onclick="trackClick(${s.id})">${isOff?'🔒 Unavailable':'🚀 Open Service'}</a>
+                </div>
+            </div>`;
+        }
+
+        function trackClick(id) {
+            const s = services.find(s => s.id === id);
+            if (s) { s.click_count = (s.click_count || 0) + 1; }
+            const visits = getVisits();
+            visits.push({ service_id: id, time: Date.now() });
+            saveVisits(visits);
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').textContent = services.length;
+            document.getElementById('stat-active').textContent = services.filter(s => s.status === 'online').length;
+            document.getElementById('stat-cats').textContent = categories.length;
+            document.getElementById('stat-visits').textContent = getVisits().length;
+        }
+
+        function populateFilters() {
+            const catSel = document.getElementById('cat-filter');
+            if (catSel) {
+                catSel.innerHTML = '<option value="all">All Categories</option>' + categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            }
+            const scat = document.getElementById('scat');
+            if (scat) {
+                scat.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            }
+        }
+
+        function renderAll() {
+            populateFilters();
+            renderServices();
+            updateStats();
+            if (getSession()) refreshAdmin();
+        }
+
+        // ==================== ADMIN PANEL ====================
+        function showAdmin() {
+            document.getElementById('frontend').style.display = 'none';
+            document.getElementById('admin-layout').classList.add('active');
+            document.getElementById('dark-toggle').style.display = 'none';
+            document.getElementById('login-modal').style.display = 'none';
+            window.location.hash = 'admin';
+            refreshAdmin();
+        }
+
+        function showFrontend() {
+            document.getElementById('frontend').style.display = 'block';
+            document.getElementById('admin-layout').classList.remove('active');
+            document.getElementById('dark-toggle').style.display = 'block';
+            window.location.hash = '';
+            renderAll();
+        }
+
+        function switchPanel(panelId, el) {
+            document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(panelId+'-panel').classList.add('active');
+            document.querySelectorAll('.admin-sidebar nav a').forEach(a => a.classList.remove('active'));
+            if (el) el.classList.add('active');
+            if (panelId === 'services') renderAdminServices();
+            if (panelId === 'categories') renderAdminCategories();
+            if (panelId === 'visits') renderAdminVisits();
+            if (panelId === 'dashboard') refreshDashboard();
+        }
+
+        function refreshAdmin() {
+            refreshDashboard();
+            renderAdminServices();
+            renderAdminCategories();
+            renderAdminVisits();
+        }
+
+        function refreshDashboard() {
+            document.getElementById('dash-total').textContent = services.length;
+            document.getElementById('dash-active').textContent = services.filter(s => s.status === 'online').length;
+            document.getElementById('dash-clicks').textContent = services.reduce((sum, s) => sum + (s.click_count||0), 0);
+        }
+
+        function renderAdminServices() {
+            const tbody = document.querySelector('#admin-services-table tbody');
+            tbody.innerHTML = services.sort((a,b) => a.sort_order - b.sort_order).map(s => {
+                const cat = categories.find(c => c.id == s.category_id);
+                return `<tr>
+                    <td><img src="${s.preview_image || 'data:image/svg+xml,...'}" width="60" height="36" style="object-fit:cover;border-radius:4px;"></td>
+                    <td>${s.name}</td>
+                    <td>${cat?cat.name:'—'}</td>
+                    <td>${s.status}</td>
+                    <td>${s.featured == 1 ? '⭐' : ''}</td>
+                    <td>${s.click_count||0}</td>
+                    <td>
+                        <button class="btn btn-sm" style="background:#fef3c7;" onclick="editService(${s.id})">✏️</button>
+                        <button class="btn btn-sm" style="background:#dbeafe;" onclick="toggleStatus(${s.id})">🔄</button>
+                        <button class="btn btn-sm" style="background:#fee2e2;" onclick="deleteService(${s.id})">🗑</button>
+                    </td></tr>`;
+            }).join('');
+        }
+
+        function editService(id) {
+            const s = services.find(s => s.id === id);
+            if (!s) return;
+            document.getElementById('edit-id').value = s.id;
+            document.getElementById('sname').value = s.name;
+            document.getElementById('sdesc').value = s.description || '';
+            document.getElementById('surl').value = s.url;
+            document.getElementById('sstatus').value = s.status;
+            document.getElementById('sfeat').value = s.featured;
+            document.getElementById('spreview').value = s.preview_image || '';
+            document.getElementById('slogo').value = s.logo || '';
+            populateFilters();
+            document.getElementById('scat').value = s.category_id;
+            document.getElementById('form-title').textContent = 'Edit Service';
+            switchPanel('add', document.querySelector('[data-panel=add]'));
+        }
+
+        document.getElementById('service-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-id').value;
+            const newService = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('sname').value.trim(),
+                description: document.getElementById('sdesc').value.trim(),
+                url: document.getElementById('surl').value.trim(),
+                category_id: parseInt(document.getElementById('scat').value),
+                status: document.getElementById('sstatus').value,
+                featured: parseInt(document.getElementById('sfeat').value),
+                sort_order: id ? (services.find(s=>s.id==id)?.sort_order || 0) : services.length,
+                preview_image: document.getElementById('spreview').value.trim(),
+                logo: document.getElementById('slogo').value.trim(),
+                click_count: id ? (services.find(s=>s.id==id)?.click_count || 0) : 0,
+            };
+            if (id) {
+                const idx = services.findIndex(s => s.id == id);
+                if (idx >= 0) services[idx] = newService;
+            } else {
+                services.push(newService);
+            }
+            document.getElementById('service-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('form-title').textContent = 'Add Service';
+            switchPanel('services', document.querySelector('[data-panel=services]'));
+            renderAll();
+        });
+
+        function deleteService(id) {
+            if (!confirm('Delete this service?')) return;
+            services = services.filter(s => s.id !== id);
+            renderAll();
+        }
+
+        function toggleStatus(id) {
+            const s = services.find(s => s.id === id);
+            if (!s) return;
+            const order = ['online', 'maintenance', 'offline'];
+            s.status = order[(order.indexOf(s.status) + 1) % order.length];
+            renderAll();
+        }
+
+        function renderAdminCategories() {
+            const tbody = document.querySelector('#cat-table tbody');
+            tbody.innerHTML = categories.map(c => {
+                const count = services.filter(s => s.category_id == c.id).length;
+                return `<tr><td>${c.name} (${count})</td><td><button class="btn btn-sm" style="background:#fee2e2;" onclick="deleteCategory(${c.id})">🗑</button></td></tr>`;
+            }).join('');
+        }
+
+        document.getElementById('cat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-cat').value.trim();
+            if (!name) return;
+            if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) { alert('Category exists'); return; }
+            categories.push({ id: Date.now(), name });
+            localStorage.setItem(DB_KEY+'_cats', JSON.stringify(categories));
+            document.getElementById('new-cat').value = '';
+            renderAll();
+        });
+
+        function deleteCategory(id) {
+            if (!confirm('Delete category? Services in it will become uncategorized.')) return;
+            categories = categories.filter(c => c.id !== id);
+            services.forEach(s => { if (s.category_id == id) s.category_id = null; });
+            localStorage.setItem(DB_KEY+'_cats', JSON.stringify(categories));
+            renderAll();
+        }
+
+        function renderAdminVisits() {
+            const visits = getVisits();
+            const tbody = document.querySelector('#visits-table tbody');
+            tbody.innerHTML = visits.slice(-50).reverse().map(v => {
+                const svc = services.find(s => s.id === v.service_id);
+                return `<tr><td>${svc?svc.name:'Deleted'}</td><td>${new Date(v.time).toLocaleString()}</td></tr>`;
+            }).join('');
+        }
+
+        function clearVisits() { if (confirm('Clear all visit logs?')) { saveVisits([]); renderAll(); } }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(services, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'services.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importJSON() {
+            const file = document.getElementById('import-file').files[0];
+            if (!file) return alert('Select a file');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!Array.isArray(data)) throw new Error('Invalid');
+                    if (!confirm(`Replace current ${services.length} services with ${data.length} from file?`)) return;
+                    services = data;
+                    renderAll();
+                    alert('Services updated!');
+                } catch (err) { alert('Invalid JSON file'); }
+            };
+            reader.readAsText(file);
+        }
+
+        // ==================== LOGIN ====================
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('luser').value.trim();
+            const pass = document.getElementById('lpass').value.trim();
+            if (user === 'admin' && btoa(pass) === users[0].password_hash) {
+                setSession(true);
+                showAdmin();
+            } else { alert('Wrong credentials'); }
+        });
+
+        function logout() {
+            setSession(false);
+            showFrontend();
+        }
+
+        function checkHash() {
+            if (window.location.hash === '#admin') {
+                if (getSession()) showAdmin();
+                else {
+                    document.getElementById('frontend').style.display = 'none';
+                    document.getElementById('login-modal').style.display = 'flex';
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash === '#admin') {
+                if (getSession()) showAdmin();
+                else {
+                    document.getElementById('frontend').style.display = 'none';
+                    document.getElementById('admin-layout').classList.remove('active');
+                    document.getElementById('login-modal').style.display = 'flex';
+                }
+            } else {
+                showFrontend();
+            }
+        });
+
+        // Dark mode
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark-mode');
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('dark', isDark ? '1' : '0');
+        }
+        if (localStorage.getItem('dark') === '1') {
+            document.documentElement.classList.add('dark-mode');
+            document.getElementById('dark-toggle').textContent = '☀️';
+        }
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Start
+        loadServices();
+    </script>
+</body>
+</html>
