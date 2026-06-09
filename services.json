@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1781013798876,
+    "name": "Tv Server",
+    "description": "from here you can watch mutiple iptv",
+    "url": "http://10.90.90.2",
+    "category_id": 2,
+    "status": "online",
+    "featured": 0,
+    "sort_order": 1,
+    "preview_image": "https://raw.githubusercontent.com/SyedMdAbuHaider/exord.online/refs/heads/main/tv1.jpeg",
+    "logo": "",
+    "click_count": 0
+  },
+  {
+    "id": 1781013626613,
+    "name": "Myflix",
+    "description": "from here you can watch movies, tv-seres and anime.",
+    "url": "https://myflix.ebox.live",
+    "category_id": 1,
+    "status": "online",
+    "featured": 0,
+    "sort_order": 2,
+    "preview_image": "https://raw.githubusercontent.com/SyedMdAbuHaider/exord.online/refs/heads/main/myflix.jpeg",
+    "logo": "",
+    "click_count": 0
+  },
+  {
+    "id": 1781014055486,
+    "name": "File Server",
+    "description": "from here you can browse different types of contents to files.",
+    "url": "http://10.90.90.200/",
+    "category_id": 3,
+    "status": "online",
+    "featured": 0,
+    "sort_order": 2,
+    "preview_image": "https://raw.githubusercontent.com/SyedMdAbuHaider/exord.online/refs/heads/main/fs.jpeg",
+    "logo": "",
+    "click_count": 0
+  },
+  {
+    "id": 1781014258748,
+    "name": "Tv Server",
+    "description": "from here you can watch serveral tv channels",
+    "url": "http://10.90.90.198/",
+    "category_id": 2,
+    "status": "online",
+    "featured": 0,
+    "sort_order": 3,
+    "preview_image": "https://raw.githubusercontent.com/SyedMdAbuHaider/exord.online/refs/heads/main/tv2.jpeg",
+    "logo": "",
+    "click_count": 0
+  }
+]
